@@ -8,7 +8,7 @@ export default class Square{
         this.eliminatedNumbers = []
     }
 
-    static at(row, col, number=0){
+    static at(row, col, number){
         return new Square(row, col, number)
     }
 }
