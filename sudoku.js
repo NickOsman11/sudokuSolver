@@ -1,4 +1,5 @@
 import Grid from "./grid.js";
+import getOtherNumbersInRow from "./solver.js";
 
 let puzzle = new Grid
 puzzle.printGrid()

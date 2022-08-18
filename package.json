@@ -1,6 +1,8 @@
 {
     "type": "module",
     "dependencies": {
+        "chai": "^4.3.6",
+        "mocha": "^10.0.0",
         "readline-sync": "^1.4.10"
     }
 }

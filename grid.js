@@ -23,11 +23,15 @@ export default class Grid{
     }
 
     setNumber(i, j, number){
-        this.grid[i][j].number = number        
+        this.grid[i][j].number = number
     }
     
     numberAt(i, j){
         return this.grid[i][j].number
+    }
+
+    eliminatedNumbersAt(i, j){
+        return this.grid[i][j].eliminatedNumbers
     }
 
 
@@ -45,7 +49,7 @@ export default class Grid{
             }
             row = getInt("Row: ", 1, 9) - 1;
             col = getInt("Column: ", 1, 9) - 1;
-           this.setNumber(row, col, number)
+            this.setNumber(row, col, number)
         }
     }
 
