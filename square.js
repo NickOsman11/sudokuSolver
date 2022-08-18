@@ -1,5 +1,3 @@
-
-
 export default class Square{
     constructor(row, col, number) {
         this.row = row;

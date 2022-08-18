@@ -25,6 +25,10 @@ export default class Grid{
     setNumber(i, j, number){
         this.grid[i][j].number = number        
     }
+    
+    numberAt(i, j){
+        return this.grid[i][j].number
+    }
 
 
     inputInitialNumbers(){
