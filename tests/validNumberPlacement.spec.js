@@ -1,13 +1,12 @@
 import expect from "chai"
 import grid from "./grid.js";
-import getOtherNumbersInRow from "./solver.js";
 
 let grid;
 beforeEach(() => grid = new grid());
 
 describe("Valid number placement", () =>{
 
-    it("can get other numbers in row", () =>{
+    it("updates the eliminated numbers on a row", () =>{
         grid.setNumber(0, 0, 1);
         grid.setNumber(0, 3, 2);
 

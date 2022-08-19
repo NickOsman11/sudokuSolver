@@ -1,5 +1,6 @@
 import Square from "./square.js";
 import getInt from "./userInput.js";
+import updateEliminatedNumbers from "./solver.js"
 
 
 export default class Grid{
@@ -10,20 +11,16 @@ export default class Grid{
 
     createGrid(){
 
-        const puzzle = new Array(9)
+        const grid = new Array(9)
         for (let i = 0; i<9; i++){
-            puzzle[i] = new Array(9)
+            grid[i] = new Array(9)
         }
         for (let i = 0; i<9; i++){
             for (let j = 0; j<9; j++){
-                puzzle[i][j] = Square.at(i, j, 0)
+                grid[i][j] = Square.at(i, j, 0)
             }
         }
-        return puzzle
-    }
-
-    setNumber(i, j, number){
-        this.grid[i][j].number = number
+        return grid
     }
     
     numberAt(i, j){
@@ -34,12 +31,23 @@ export default class Grid{
         return this.grid[i][j].eliminatedNumbers
     }
 
+    setNumber(i, j, number){
+        this.grid[i][j].number = number
+        updateEliminatedNumbers(i, j, this.grid)
+    }
+
+    addEliminatedNumber(i, j, number){
+        this.grid[i][j].eliminatedNumbers.push(number)
+    }
+
 
     inputInitialNumbers(){
 
+        console.log("-".repeat(100))
         console.log("Enter the known information - enter the number, followed by its row,"
                     + " followed by its column. \nWhen you have entered all the numbers with "
-                    + "their rows and columns, press zero. \n*********************************")
+                    + "their rows and columns, press zero.")
+        console.log("-".repeat(100))
         
         let number; let row; let col;
         while (number !== 0){
@@ -55,16 +63,20 @@ export default class Grid{
 
     printGrid(){
 
-        this.grid.forEach(row => {
-            console.log(...row.map(square => square.number))
-        });
-        // for (let i = 0; i<9; i++){
-        //     let row = this.grid[i].map(square => square.number)
-        //     console.log(...row)
-        //     for (let j = 0; j<9; j++){
-        //         console.log(row[j])
-        //     }
-        // }
+        // this.grid.forEach(row => {
+        //     console.log(...row.map(square => square.number))
+        // });
+
+
+        for (let i = 0; i<9; i++){
+
+            if (i == 3 || i == 6){
+                console.log("-".repeat(21))
+            }
+            console.log(`${this.numberAt(i, 0)} ${this.numberAt(i, 1)} ${this.numberAt(i, 2)} | ` +
+            `${this.numberAt(i, 3)} ${this.numberAt(i, 4)} ${this.numberAt(i, 5)} | ` +
+            `${this.numberAt(i, 6)} ${this.numberAt(i, 7)} ${this.numberAt(i, 8)}`)
+        }
     }
 }
 
