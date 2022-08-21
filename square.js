@@ -1,9 +1,10 @@
-export default class Square{
+export default class Square { 
     constructor(row, col, number) {
-        this.row = row;
-        this.col = col;
-        this.number = number
-        this.eliminatedNumbers = []
+        this.i = row;
+        this.j = col;
+        this.number = number //the number at that square - zero if empty
+        this.eliminatedNumbers = [] //a list of all the numbers that cannot
+                                    //be at that square
     }
 
     static at(row, col, number){

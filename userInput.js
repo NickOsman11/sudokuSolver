@@ -1,12 +1,12 @@
 import readline from "readline-sync";
 
-export default function getInt(prompt, min=undefined, max=undefined){
+export default function getInt(prompt, min, max) {
 
     console.log(prompt);
     let answer;
     while ((!(Number.isInteger(answer)))
             || ((max != undefined) && (answer > max))
-            || ((max != undefined) && (answer < min))){
+            || ((min != undefined) && (answer < min))){
         try{
             answer = Number(readline.prompt());
             if (!(Number.isInteger(answer))){

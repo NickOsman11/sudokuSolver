@@ -1,47 +1,88 @@
-import Grid from "./grid.js";
+import {updateEliminatedNumbers} from "./gridUpdater.js"
 
 
-export default function updateEliminatedNumbers(i, j, grid){
+function solvePuzzle(grid){
 
-    updateRowEliminatedNumbers(i, j, grid)
-    updateColEliminatedNumbers(i, j, grid)
-    update3by3EliminatedNumbers(i, j, grid)
+    for (let m = 0; m<3; m++){ //test loop; should instead loop until puzzle solved
+
+        //iterates across whole array, and if number at a square has not been set yet,
+        //checks to see if enough info is available to determine the number
+        //if so, sets number
+        grid.gridArray.forEach(row => {
+            row.forEach(square => {
+                if (square.number === 0){
+                    // console.log(`trying to solve ${square.i}${square.j}`)
+                    solveSquare(square.i, square.j, grid);
+                }
+            });
+        })
+        grid.printGrid()
+
+        // test loop; delete later
+        // for(let j = 0; j<grid.gridSize; j++){
+        //     for(let k = 0; k<grid.gridSize; k++){
+        //         console.log(`ElimNumbers at ${j}${k}: ${grid.eliminatedNumbersAt(j, k)}`)
+        //     }
+        // }
+    }
 }
 
+function solveSquare(i, j, grid){
 
-function updateRowEliminatedNumbers(i, j, grid){ 
-
-    // let numberToAdd = grid.numberAt(i, j)
-    let numberToAdd = grid[i][j].number
-    grid[i].forEach(square => {
-        if (!(square.eliminatedNumbers.includes(numberToAdd))){
-            square.eliminatedNumbers.push(numberToAdd)
+    //quickly check if it is the last number not filled in in row,
+    //col or subgrid, and set it if so
+    if (setIfLastInRowColOrSubgrid(i, j, grid)){ //returns true if number was set
+        return//is there a better way of stopping the function from executing?
+    }
+    //Now for each number [1 => gridsize], check to see if that number cannot
+    //be in any other square on the row.
+    //if so, that number must go in this square - so set it 
+    //repeat for col and subgrid
+    grid.numbersList.forEach(n =>{
+        
+        if (!grid.eliminatedNumbersAt(i, j).includes(n)){ //don't try to set n at this 
+                                                          //square if n already eliminated! 
+            if (setIfNumberEliminatedForRestOfRow(i, j, grid, n)){ 
+                return 
+            }
         }
-    })
+    }) 
 }
 
 
-// function updateColEliminatedNumbers(i, j, grid){
+function setIfNumberEliminatedForRestOfRow(i, j, grid, n){
 
-//     // let numberToAdd = grid.numberAt(i, j)
-//     let numberToAdd = grid[i][j].number
-//     for (let row = 0; row < 9; row ++){
-//         if ( ! (grid.eliminatedNumbersAt(row, j).includes(numberToAdd))){
-//             grid.addEliminatedNumber(row, j, numberToAdd)
-//         }
-//     }
-// }
+    let numberOfSquaresEliminated = 0
+    for (let col = 0; col < grid.gridSize; col ++){
+        if (col != j){   //skip the square we are trying to solve      
+
+            if (grid.eliminatedNumbersAt(i, col).includes(n)){
+                numberOfSquaresEliminated ++
+            }
+        }
+    }
+    if (numberOfSquaresEliminated === 8){
+        grid.setNumber(i, j, n)
+        grid.printGrid()
+        console.log()
+        return true
+    }
+}
 
 
-// function update3by3EliminatedNumbers(i, j, grid){
+function setIfLastInRowColOrSubgrid(i, j, grid){
 
-//     // let numberToAdd = grid.numberAt(i, j)
-//     let numberToAdd = grid[i][j].number
-//     for (let row = i - i%3; row < (i - i%3) + 3; i++){
-//         for (let col = j -  j%3; col < (j - j%3) + 3; col++){
-//             if ( ! (grid.eliminatedNumbersAt(row, col).includes(numberToAdd))){
-//                 grid.addEliminatedNumber(row, col, numberToAdd)
-//             }
-//         }
-//     }
-// }
+    let eliminatedNumbers = grid.eliminatedNumbersAt(i, j);
+    
+    if (eliminatedNumbers.length === grid.gridSize - 1){
+        grid.numbersList.forEach(n =>{
+            if (!eliminatedNumbers.includes(n)){
+                grid.setNumber(i, j, n)
+                return true
+            };
+        });
+    };
+};
+
+
+export {solvePuzzle, updateEliminatedNumbers};
