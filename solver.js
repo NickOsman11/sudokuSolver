@@ -42,8 +42,14 @@ function solveSquare(i, j, grid){
         
         if (!grid.eliminatedNumbersAt(i, j).includes(n)){ //don't try to set n at this 
                                                           //square if n already eliminated! 
-            if (setIfNumberEliminatedForRestOfRow(i, j, grid, n)){ 
-                return 
+            // if (setIfNumberEliminatedForRestOfRow(i, j, grid, n)){ 
+            //     return 
+            // }
+            // if (setIfNumberEliminatedForRestOfCol(i, j, grid, n)){ 
+            //     return 
+            // }
+            if (setIfNumberEliminatedForSubgrid(i, j, grid, n)){ 
+                return;
             }
         }
     }) 
@@ -69,6 +75,43 @@ function setIfNumberEliminatedForRestOfRow(i, j, grid, n){
     }
 }
 
+function setIfNumberEliminatedForRestOfCol(i, j, grid, n){
+
+    let numberOfSquaresEliminated = 0
+    for (let row = 0; row < grid.gridSize; row ++){
+        if (row != i){   //skip the square we are trying to solve      
+
+            if (grid.eliminatedNumbersAt(row, j).includes(n)){
+                numberOfSquaresEliminated ++
+            }
+        }
+    }
+    if (numberOfSquaresEliminated === 8){
+        grid.setNumber(i, j, n);
+        return true;
+    }
+}
+
+function setIfNumberEliminatedForSubgrid(i, j, grid, n){
+    
+    let numberOfSquaresEliminated = 0;
+    let subgridSize = Math.sqrt(grid.gridSize);
+
+    for (let row = i - i%subgridSize ; row < (i - i%subgridSize) + subgridSize ; row++){
+        for (let col = j -  j%subgridSize ; col < (j - j%subgridSize) + subgridSize ; col++){
+            if (!(row === i && col === j)){   //skip the square we are trying to solve      
+
+                if (grid.eliminatedNumbersAt(row, col).includes(n)){
+                    numberOfSquaresEliminated ++
+                }
+            }
+        }
+    }
+    if (numberOfSquaresEliminated === 8){
+        grid.setNumber(i, j, n)
+        return true
+    }
+}
 
 function setIfLastInRowColOrSubgrid(i, j, grid){
 
