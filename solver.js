@@ -3,7 +3,7 @@ import {updateEliminatedNumbers} from "./gridUpdater.js"
 
 function solvePuzzle(grid){
 
-    for (let m = 0; m<3; m++){ //test loop; should instead loop until puzzle solved
+    for (let m = 0; m<10; m++){ //test loop; should instead loop until puzzle solved
 
         //iterates across whole array, and if number at a square has not been set yet,
         //checks to see if enough info is available to determine the number
@@ -11,12 +11,12 @@ function solvePuzzle(grid){
         grid.gridArray.forEach(row => {
             row.forEach(square => {
                 if (square.number === 0){
-                    // console.log(`trying to solve ${square.i}${square.j}`)
                     solveSquare(square.i, square.j, grid);
                 }
             });
         })
         grid.printGrid()
+        console.log(" ")
 
         // test loop; delete later
         // for(let j = 0; j<grid.gridSize; j++){
@@ -42,12 +42,12 @@ function solveSquare(i, j, grid){
         
         if (!grid.eliminatedNumbersAt(i, j).includes(n)){ //don't try to set n at this 
                                                           //square if n already eliminated! 
-            // if (setIfNumberEliminatedForRestOfRow(i, j, grid, n)){ 
-            //     return 
-            // }
-            // if (setIfNumberEliminatedForRestOfCol(i, j, grid, n)){ 
-            //     return 
-            // }
+            if (setIfNumberEliminatedForRestOfRow(i, j, grid, n)){ 
+                return 
+            }
+            if (setIfNumberEliminatedForRestOfCol(i, j, grid, n)){ 
+                return 
+            }
             if (setIfNumberEliminatedForSubgrid(i, j, grid, n)){ 
                 return;
             }
