@@ -1,6 +1,6 @@
 import readline from "readline-sync";
 
-export default function getInt(prompt, min, max) {
+export default function getInt(prompt: string, min: number, max: number) {
 
     console.log(prompt);
     let answer;
@@ -8,7 +8,11 @@ export default function getInt(prompt, min, max) {
             || ((max != undefined) && (answer > max))
             || ((min != undefined) && (answer < min))){
         try{
-            answer = Number(readline.prompt());
+            answer = readline.prompt();
+            if (answer === ""){
+                throw "Not an integer"
+            }
+            answer = Number(answer)
             if (!(Number.isInteger(answer))){
                 throw "Not an integer";
             }

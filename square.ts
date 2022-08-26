@@ -1,4 +1,9 @@
 export default class Square { 
+    i: number;
+    j: number;
+    number: number;
+    eliminatedNumbers: number[];
+
     constructor(row, col, number) {
         this.i = row;
         this.j = col;

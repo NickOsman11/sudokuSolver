@@ -1,18 +1,21 @@
-import Square from "./square.js";
-import getInt from "./userInput.js";
-import {updateEliminatedNumbers} from "./solver.js"
+import Square from "./square";
+import getInt from "./userInput";
+import {updateEliminatedNumbers} from "./gridUpdater"
 
 
 export default class Grid {
-
+    gridSize:number;
+    gridArray:Square[][];
+    numbersList:number[];
+    
     constructor(){
         this.gridSize = 9
-        this.gridArray = this.createGrid()  //contains matrix of squares
+        this.gridArray = this.createGrid()      //contains matrix of squares
         this.numbersList = this.getNumbersList() //list of numbers from [1 => gridsize]
         this.inputInitialNumbers()          //allows user to input known info
     }
 
-    createGrid(){
+    createGrid() :Square[][]{
 
         const puzzle = new Array(this.gridSize)
         for (let i = 0; i<this.gridSize; i++){
@@ -26,24 +29,24 @@ export default class Grid {
         return puzzle 
     }
 
-    getNumbersList(){
+    getNumbersList()   {
 
-        let numbersList = [];  
+        let numbersList: number[] = [];
         for (let n = 0; n<this.gridSize; n++){
-            numbersList.push(n+1)
+            numbersList.push(n + 1)
         };
         return numbersList
     }
     
-    numberAt(i, j) {
+    numberAt(i:number, j:number) {
         return this.gridArray[i][j].number
     }
 
-    eliminatedNumbersAt(i, j) {
+    eliminatedNumbersAt(i:number, j:number) {
         return this.gridArray[i][j].eliminatedNumbers
     }
 
-    setNumber(i, j, number) {
+    setNumber(i:number, j:number, number:number) {
 
         this.gridArray[i][j].number = number
         if (number !== 0){
@@ -51,7 +54,7 @@ export default class Grid {
         }
     }
 
-    addEliminatedNumber(i, j, number){
+    addEliminatedNumber(i:number, j:number, number){
         this.gridArray[i][j].eliminatedNumbers.push(number)
     }
 

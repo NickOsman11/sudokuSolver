@@ -1,4 +1,6 @@
-function updateEliminatedNumbers(i, j, grid, numberJustSet){
+import Grid from "./grid"
+
+function updateEliminatedNumbers(i:number , j:number, grid:Grid, numberJustSet:number){
 
     //once a number is set at a particular square, no other square
     //in that row can be set at that number
@@ -13,7 +15,7 @@ function updateEliminatedNumbers(i, j, grid, numberJustSet){
     updateThisSquareEliminatedNumbers(i, j, grid)
 }
 
-function updateThisSquareEliminatedNumbers(i, j, grid){
+function updateThisSquareEliminatedNumbers(i:number, j:number, grid:Grid){
 
     grid.numbersList.forEach(n =>{
         if (!grid.eliminatedNumbersAt(i, j).includes(n)){
@@ -23,7 +25,7 @@ function updateThisSquareEliminatedNumbers(i, j, grid){
 }
 
 
-function updateRowEliminatedNumbers(i, j, grid, numberJustSet){ 
+function updateRowEliminatedNumbers(i:number, j:number, grid:Grid, numberJustSet:number){ 
 
     grid.gridArray[i].forEach(square => {
         if (!(square.eliminatedNumbers.includes(numberJustSet))){
@@ -33,7 +35,7 @@ function updateRowEliminatedNumbers(i, j, grid, numberJustSet){
 }
 
 
-function updateColEliminatedNumbers(i, j, grid, numberJustSet){
+function updateColEliminatedNumbers(i:number, j:number, grid:Grid, numberJustSet:number){
 
     for (let row = 0; row < grid.gridSize; row ++){
         if ( ! (grid.eliminatedNumbersAt(row, j).includes(numberJustSet))){
@@ -43,7 +45,7 @@ function updateColEliminatedNumbers(i, j, grid, numberJustSet){
 }
 
 
-function updateSubgridEliminatedNumbers(i, j, grid, numberJustSet){
+function updateSubgridEliminatedNumbers(i:number, j:number, grid:Grid, numberJustSet:number){
 
     let subgridSize = Math.sqrt(grid.gridSize)
     for (let row = i - i%subgridSize; row < (i - i%subgridSize) + subgridSize; row++){
