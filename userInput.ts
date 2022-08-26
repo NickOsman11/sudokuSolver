@@ -18,7 +18,7 @@ export default function getInt(prompt: string, min: number, max: number): number
             }
             if (answer && max != undefined && answer > max){
                 throw "Too big";
-            }0
+            }
             if (answer && min != undefined && answer < min){
                 throw "Too small";
             }
