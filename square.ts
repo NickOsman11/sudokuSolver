@@ -4,7 +4,7 @@ export default class Square {
     number: number;
     eliminatedNumbers: number[];
 
-    constructor(row, col, number) {
+    constructor(row: number, col: number, number: number) {
         this.i = row;
         this.j = col;
         this.number = number //the number at that square - zero if empty
@@ -12,7 +12,7 @@ export default class Square {
                                     //be at that square
     }
 
-    static at(row, col, number){
+    static at(row: number, col: number, number: number){
         return new Square(row, col, number)
     }
 }

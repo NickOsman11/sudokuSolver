@@ -54,7 +54,7 @@ export default class Grid {
         }
     }
 
-    addEliminatedNumber(i:number, j:number, number){
+    addEliminatedNumber(i:number, j:number, number: number){
         this.gridArray[i][j].eliminatedNumbers.push(number)
     }
 
@@ -64,7 +64,7 @@ export default class Grid {
         console.log("Enter the known information:")
         console.log("-".repeat(30))
         
-        let number; let row; let col;
+        let number: number; let row; let col;
         enterNumbersLoop:
         while (true){
             number = getInt("Enter a number (enter -1 to show grid, -2 if finished)", -2, this.gridSize);

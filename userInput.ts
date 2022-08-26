@@ -1,12 +1,12 @@
 import readline from "readline-sync";
 
-export default function getInt(prompt: string, min: number, max: number) {
+export default function getInt(prompt: string, min: number, max: number): number {
 
     console.log(prompt);
     let answer;
     while ((!(Number.isInteger(answer)))
-            || ((max != undefined) && (answer > max))
-            || ((min != undefined) && (answer < min))){
+            || (answer && (max != undefined) && (answer > max))
+            || (answer && (min != undefined) && (answer < min))){
         try{
             answer = readline.prompt();
             if (answer === ""){
@@ -16,10 +16,10 @@ export default function getInt(prompt: string, min: number, max: number) {
             if (!(Number.isInteger(answer))){
                 throw "Not an integer";
             }
-            if (max != undefined && answer > max){
+            if (answer && max != undefined && answer > max){
                 throw "Too big";
             }0
-            if (min != undefined && answer < min){
+            if (answer && min != undefined && answer < min){
                 throw "Too small";
             }
         }
@@ -35,6 +35,6 @@ export default function getInt(prompt: string, min: number, max: number) {
             }
         }
     }
-    return answer
+    return 0;
 }
 
